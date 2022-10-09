@@ -28,7 +28,7 @@ class Inventory extends Migration
             $table->integer('quantity');
             $table->float('price')->default(0);
             $table->float('cost')->default(0);
-
+            $table->string('currency')->default('USD'); // VES O USD
             $table->timestamps();            
 
             //haciendo references

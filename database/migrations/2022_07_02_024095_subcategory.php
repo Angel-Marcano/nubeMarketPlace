@@ -14,7 +14,7 @@ class Subcategory extends Migration
      */
     public function up()
     {
-        Schema::create('subcategory', function (Blueprint $table) {
+        Schema::create('subCategory', function (Blueprint $table) {
             
             $table->id();
             //nombre de la subCategoria
