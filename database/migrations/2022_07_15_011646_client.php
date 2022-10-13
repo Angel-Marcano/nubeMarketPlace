@@ -18,9 +18,10 @@ class Client extends Migration
             $table->id();
 
             $table->string('name',30);
-            $table->string('document',20);
-            $table->string('address',150);
-            $table->string('phone',30);
+            $table->string('dni',20);
+            $table->string('address',150)->nullable();
+            $table->string('phone',30)->nullable();
+            $table->string('type_client',10); // person or company 
             $table->boolean('isActive')->default(true);
 
             $table->foreignId('business_id')->constrained("business")->onUpdate('cascade')

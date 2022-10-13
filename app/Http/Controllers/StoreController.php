@@ -56,9 +56,9 @@ class StoreController extends Controller
        
     }
 
-    public function update(Request $request){
+    public function update(Request $request,$id){
         $request->validate([
-            "store_id" => "required|numeric",
+           // "store_id" => "required|numeric",
             "business_id" => "required|numeric",
             "name" => "required|string",
             "isActive" => "required|numeric",
@@ -66,10 +66,10 @@ class StoreController extends Controller
         
         try{
             $datos=$request->all();
-            $store = Store::findOrfail($datos['store_id']);
+            $store = Store::findOrfail($id);
             $store->name = $datos['name'];
             $store->business_id = $datos['business_id'];
-            $store->activo = $datos['isActive'];
+            $store->isActive = $datos['isActive'];
             $store->saveOrFail();
         }catch(Exception $e){
             return response()->json([
@@ -88,7 +88,7 @@ class StoreController extends Controller
        
         try{
             $store=Store::findOrfail($id);
-            $store->activo = 0;
+            $store->isActive = 0;
             $store->saveOrFail();
             
         }catch(Exception $e){

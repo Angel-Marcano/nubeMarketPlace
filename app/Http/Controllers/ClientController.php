@@ -3,28 +3,38 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\Client;
 use Exception;
 
-class CategoryController extends Controller
+class ClientController extends Controller
 {
     //
     public function index(){
-        $Categorys = Category::all();
-        return response()->json($Categorys);
+        $Clients = Client::all();
+        return response()->json($Clients);
     }
 
     public function post(Request $request){
         $request->validate([
             "name" => "required|string|max:30",
+            "dni" => "required|string",
+            "address" => "required|string|max:150",
+            "phone" => "string|max:30|nullable",
+            "type_client" => "required|string|max:10",
           ]);
         
         $datos=$request->all();
 
         try{
-            $Category = new Category();
-            $Category->name = $datos['name'];
-            $Category->saveOrFail();
+            $Client = new Client();
+            $Client->name = $datos['name'];
+            $Client->dni = $datos['dni'];
+            $Client->address = $datos['address'];
+            $Client->phone = $datos['phone'];
+            $Client->type_client = $datos['type_client'];
+            $Client->isActive = 1;
+            $Client->business_id = 1;
+            $Client->saveOrFail();
         }
         catch (Exception $e) {
             return response()->json([
@@ -43,8 +53,8 @@ class CategoryController extends Controller
     public function get($id){
         
         try{
-            $Category=Category::findOrfail($id);
-            return response()->json($Category);
+            $Client=Client::findOrfail($id);
+            return response()->json($Client);
         }catch(Exception $e){
             return response()->json([
                 'success' => 'error',
@@ -55,17 +65,26 @@ class CategoryController extends Controller
     }
 
     public function update(Request $request,$id){
+     
         $request->validate([
-            "name" => "required|string",
-            "active" => "required|numeric",
+          //  "client_id" => "required|integer",
+            "name" => "required|string|max:30",
+            "dni" => "required|string",
+            "address" => "required|string|max:150|nullable",
+            "phone" => "string|max:30|nullable",
+            "type_client" => "required|string|max:10",
           ]);
-        
+  
         try{
             $datos=$request->all();
-            $Category = Category::findOrfail($id);
-            $Category->name = $datos['name'];
-            $Category->isActive = $datos['active'];
-            $Category->saveOrFail();
+            $Client = Client::findOrfail($id);
+            $Client->name = $datos['name'];
+            $Client->dni = $datos['dni'];
+            $Client->address = $datos['address'];
+            $Client->phone = $datos['phone'];
+            $Client->type_client = $datos['type_client'];
+            $Client->isActive = $datos['isActive'];
+            $Client->saveOrFail();
 
         }catch(Exception $e){
             return response()->json([
@@ -83,9 +102,9 @@ class CategoryController extends Controller
     public function delete($id){
        
         try{
-            $Category=Category::findOrfail($id);
-            $Category->isActive = 0;
-            $Category->saveOrFail();
+            $Client=Client::findOrfail($id);
+            $Client->isActive = 0;
+            $Client->saveOrFail();
             
         }catch(Exception $e){
             return response()->json([
@@ -96,7 +115,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => 'ok',
-            'message' => 'categoria inactiva'
+            'message' => 'Cliente desactivado'
         ]);
     }
     

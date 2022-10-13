@@ -56,7 +56,7 @@ class SubCategoryController extends Controller
        
     }
 
-    public function update($id,Request $request){
+    public function update(Request $request,$id){
         $request->validate([
             "name" => "required|string",
             "active" => "required|numeric",
@@ -66,7 +66,7 @@ class SubCategoryController extends Controller
             $datos=$request->all();
             $Category = SubCategory::findOrfail($id);
             $Category->name = $datos['name'];
-            $Category->activo = $datos['active'];
+            $Category->isActive = $datos['active'];
             $Category->saveOrFail();
 
         }catch(Exception $e){
@@ -86,7 +86,7 @@ class SubCategoryController extends Controller
        
         try{
             $Category=SubCategory::findOrfail($id);
-            $Category->activo = 0;
+            $Category->isActive = 0;
             $Category->saveOrFail();
             
         }catch(Exception $e){

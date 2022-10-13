@@ -54,18 +54,17 @@ class BusinessController extends Controller
        
     }
 
-    public function update(Request $request){
+    public function update(Request $request,$id){
         $request->validate([
-            "empresa_id" => "required|numeric",
             "name" => "required|string",
             "active" => "required|numeric",
           ]);
         
         try{
             $datos=$request->all();
-            $Business = Business::findOrfail($datos['empresa_id']);
+            $Business = Business::findOrfail($id);
             $Business->name = $datos['name'];
-            $Business->activo = $datos['active'];
+            $Business->isActive = $datos['active'];
             $Business->saveOrFail();
 
         }catch(Exception $e){
@@ -85,7 +84,7 @@ class BusinessController extends Controller
        
         try{
             $Business=Business::findOrfail($id);
-            $Business->activo = 0;
+            $Business->isActive = 0;
             $Business->saveOrFail();
             
         }catch(Exception $e){

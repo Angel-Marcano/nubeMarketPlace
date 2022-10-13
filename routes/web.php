@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\BusinessController;
-
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\RolesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::prefix('almacen')->group(function () {
     Route::get('', [StoreController::class, 'index']);
     Route::get('get/{id}', [StoreController::class, 'get']);
     Route::post('create', [StoreController::class, 'post']);
-    Route::post('update', [StoreController::class, 'update']);
+    Route::post('update/{id}', [StoreController::class, 'update']);
     Route::post('delete/{id}', [StoreController::class, 'delete']);
     
 });
@@ -31,7 +32,7 @@ Route::prefix('empresas')->group(function () {
     Route::get('getAll', [BusinessController::class, 'index']);
     Route::get('get/{id}', [BusinessController::class, 'get']);
     Route::post('create', [BusinessController::class, 'post']);
-    Route::post('update', [BusinessController::class, 'update']);
+    Route::post('update/{id}', [BusinessController::class, 'update']);
     Route::post('delete/{id}', [BusinessController::class, 'delete']);
 });
 
@@ -57,4 +58,18 @@ Route::prefix('subCategory')->group(function () {
     Route::post('create', [SubCategoryController::class, 'post']);
     Route::post('update/{id}', [SubCategoryController::class, 'update']);
     Route::post('delete/{id}', [SubCategoryController::class, 'delete']);
+});
+
+Route::prefix('cliente')->group(function () {
+    Route::get('', [ClientController::class, 'index']);
+    Route::get('get/{id}', [ClientController::class, 'get']);
+    Route::post('create', [ClientController::class, 'post']);
+    Route::post('update/{id}', [ClientController::class, 'update']);
+    Route::post('delete/{id}', [ClientController::class, 'delete']);
+    
+});
+
+Route::prefix('roles')->group(function () {
+    Route::get('', [RolesController::class, 'index']);
+    
 });

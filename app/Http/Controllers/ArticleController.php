@@ -68,21 +68,21 @@ class ArticleController extends Controller
        
     }
 
-    public function update(Request $request){
+    public function update(Request $request,$id){
         $request->validate([
-            "articulo_id"  => "required|numeric",
+           // "articulo_id"  => "required|numeric",
             "name" => "required|string|max:30",
             "preparado" => "required|numeric",
-            "activo" => "required|boolean",
+            "isActive" => "required|boolean",
             "type" => "required|string",
           ]);
         
         try{
             $datos=$request->all();
-            $article = Article::findOrfail($datos['articulo_id']);
+            $article = Article::findOrfail($id);
             $article->name = $datos['name'];
             $article->preparado = $datos['isPrepared'];
-            $article->activo = $datos['isActive'];
+            $article->isActive = $datos['isActive'];
             $article->mod_date = new Date('d-m-Y H:i:s');
 
             $article->saveOrFail();
@@ -104,7 +104,7 @@ class ArticleController extends Controller
        
         try{
             $article=Article::findOrfail($id);
-            $article->activo = 0;
+            $article->isActive = 0;
             $article->saveOrFail();
             
         }catch(Exception $e){
