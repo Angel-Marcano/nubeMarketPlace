@@ -3,36 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\Data\articleListCollection;
+use App\Http\Resources\Data\receiptsListCollection;
 use App\Models\Article;
-use App\Models\Inventory;
+use App\Models\Receipts;
 use Carbon\Carbon;
+
 use Exception;
 
-class ArticleController extends Controller
+class FacturaController extends Controller
 {
     //
     public function index(Request $request){
-        
-        $request->validate([
-            'store_id' => 'required|integer',
-        ]);
+        $row=10;
+        $store_id=1;
+        $business_id=1;
 
         $data=$request->all();
-        $row=isset($data['rows'])? $data['rows'] : 10;
-        $business_id=isset($data['business_id'])? $data['business_id'] : 1;
-        $store_id=isset($data['store_id'])? $data['store_id'] : 1;
 
-        $Articles = Inventory::with(['article','store'])
-        ->when(isset($store_id),function($query) use ($store_id){
+        $Receipts = Receipts::with(['client','collection','articles',
+        'articlesReceipts'=>function($q){
+            $q->with(['article']);
+        }
+        ])
+      /*  ->when(isset($store_id),function($query) use ($store_id){
             $query->where('store_id',$store_id);
         })
         ->whereHas('article',function($query) use($business_id){
             $query->where('business_id',$business_id);
-        })
+        })*/
         ->get();
 
-        $data =articleListCollection::collection($Articles);
+     
+
+        $data =receiptsListCollection::collection($Receipts);
         return response()->json($data);      
     }
 

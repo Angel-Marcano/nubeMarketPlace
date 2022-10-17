@@ -6,6 +6,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\FacturaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,3 +74,9 @@ Route::prefix('roles')->group(function () {
     Route::get('', [RolesController::class, 'index']);
     
 });
+
+Route::prefix('facturas')->group(function () {
+    Route::get('', [FacturaController::class, 'index']);
+    
+});
+//FacturaController

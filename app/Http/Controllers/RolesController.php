@@ -13,9 +13,9 @@ class RolesController extends Controller
     //
     public function index(){
         $Roles = User::with(['roles'])->
-                    first();
+                    findOrfail(1);
                     $data = rolesCollection::collection($Roles->roles);
-                   // dd($Roles->roles);
+                   
                     
         return response()->json($data);
     }

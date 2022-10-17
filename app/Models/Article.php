@@ -10,4 +10,9 @@ class Article extends Model
     use HasFactory;
     protected $table = "Article";
     public $timestamps =true;
+
+    public function inventarios()
+    {
+        return $this->hasMany(\App\Models\Inventory::class, 'article_id');
+    }
 }

@@ -11,11 +11,9 @@ class rolesCollection extends JsonResource
     {
         /** @var \App\Models\roles $this */
        
-       // dd($this);
         $mapped = [
             'module' => $this->module,
             'level' => $this->level,
-           // 'nombre' => $this->almacen
         ];
 
         return $mapped;

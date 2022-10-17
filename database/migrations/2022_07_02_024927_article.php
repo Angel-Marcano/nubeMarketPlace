@@ -16,21 +16,23 @@ class Article extends Migration
     {
         Schema::create('article', function (Blueprint $table) {
            
-            $table->foreignId('business_id')->constrained("business")->onUpdate('cascade')
-            ->onDelete('cascade');
-              // relacion con CATEGORIA
-            $table->foreignId('category_id')->constrained("category")->onUpdate('cascade')
-              ->onDelete('cascade')->nullable();
-
-            // relacion con SUBCATEGORIA
-            $table->foreignId('subCategory_id')->constrained("subCategory")->onUpdate('cascade')
-            ->onDelete('cascade')->nullable();
-            
             $table->id();
             $table->string('name',30);
             $table->string('descripcion',255)->nullable()->default(null);
             $table->string('image_url',255)->nullable()->default(null);
-            $table->string('type',20)->nullable()->default(null);
+            $table->string('type',20)->nullable()->default(null); // producto o servicio
+            $table->integer('critical_stock')->dafeult(1);
+            $table->foreignId('business_id')->constrained("business")->onUpdate('cascade')
+            ->onDelete('cascade');
+              // relacion con CATEGORIA
+
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade');
+
+            // relacion con SUBCATEGORIA
+            $table->unsignedBigInteger('subCategory_id')->nullable();
+            $table->foreign('subCategory_id')->references('id')->on('subCategory')->onDelete('cascade');
+
             $table->boolean('isPrepared')->default(false);
             $table->boolean('isActive')->default(true);
 
