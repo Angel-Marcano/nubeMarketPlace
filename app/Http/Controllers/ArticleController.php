@@ -32,7 +32,18 @@ class ArticleController extends Controller
         })
         ->get();
 
-        $data =articleListCollection::collection($Articles);
+        $dataResponse =articleListCollection::collection($Articles);
+
+        return response()->json([
+            "data" => $dataResponse,
+            "pagination" => (object)[
+                "currentPage" => $Articles->currentPage(),
+                "lastPage" => $Articles->lastPage(),
+                "perPage" => $Articles->perPage(),
+                "total" => $Articles->total()
+            ]
+        ]);
+
         return response()->json($data);      
     }
 

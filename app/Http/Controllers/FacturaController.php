@@ -15,7 +15,6 @@ class FacturaController extends Controller
     //
     public function index(Request $request){
         $row=10;
-        $store_id=1;
         $business_id=1;
 
         $data=$request->all();
@@ -25,17 +24,21 @@ class FacturaController extends Controller
             $q->with(['article']);
         }
         ])
-      /*  ->when(isset($store_id),function($query) use ($store_id){
-            $query->where('store_id',$store_id);
-        })
-        ->whereHas('article',function($query) use($business_id){
-            $query->where('business_id',$business_id);
-        })*/
-        ->get();
 
-     
+        ->where('business_id',$business_id)
+        ->paginate($row);
 
-        $data =receiptsListCollection::collection($Receipts);
+        $dataResponse =receiptsListCollection::collection($Receipts);
+        return response()->json([
+            "data" => $dataResponse,
+            "pagination" => (object)[
+                "currentPage" => $Receipts->currentPage(),
+                "lastPage" => $Receipts->lastPage(),
+                "perPage" => $Receipts->perPage(),
+                "total" => $Receipts->total()
+            ]
+        ]);
+
         return response()->json($data);      
     }
 
